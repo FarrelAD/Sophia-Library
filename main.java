@@ -6,27 +6,28 @@ public class main {
     static Scanner scan1 = new Scanner(System.in);
 
     static ArrayList<ArrayList<ArrayList<String>>> allUserData = new ArrayList<>();
-    static ArrayList<ArrayList<String>> adminData = new ArrayList<>();
+    static ArrayList<ArrayList<String>> adminsData = new ArrayList<>();
+    static ArrayList<ArrayList<String>> librariansData = new ArrayList<>();
+    static ArrayList<ArrayList<String>> patronsData = new ArrayList<>();
 
-    static String [][] adminDataYes = { 
+    static String [][] adminsDataFirst = { 
         {"BUDI", "1234"},
         {"BADAK", "5678"},
         {"BADU", "9999"}
     };
 
-    static String [][] librarianData = {
+    static String [][] librariansDataFirst = {
         {"NANA", "1122"},
         {"MAWAR", "4321"},
-        {"ADI", "9090"}
+        {"ADI", "9090"},
+        {"BEJO", "0101"}
     };
 
-    static String [][] patronData = {
+    static String [][] patronsDataFirst = {
         {"ANGGI", "5566"},
         {"SETIAWAN", "2332"},
         {"ALEXANDER", "9898"}
     };
-
-
 
     static String username;
     static int password;
@@ -36,15 +37,45 @@ public class main {
     }
 
     private static void loadData() {
-        for (int i = 0; i < 3; i++) {
-            adminData.add(new ArrayList<>());
+        for (int i = 0; i < adminsDataFirst.length; i++) {
+            adminsData.add(new ArrayList<>());
+
+            adminsData.get(i).add(adminsDataFirst[i][0]);
+            adminsData.get(i).add(adminsDataFirst[i][1]);
+        }
+        
+        // adminsData.forEach((n) -> System.out.println(n));
+
+        for (int i = 0; i < librariansDataFirst.length; i++) {
+            librariansData.add(new ArrayList<>());
+
+            librariansData.get(i).add(librariansDataFirst[i][0]);
+            librariansData.get(i).add(librariansDataFirst[i][1]);
         }
 
-        adminData.get(0).add("BUDI");
-        adminData.get(0).add("BADAK");
-        adminData.get(0).add("BADU");
+        // librariansData.forEach((n) -> System.out.println(n));
 
-        
+        for (int i = 0; i < patronsDataFirst.length; i++) {
+            patronsData.add(new ArrayList<>());
+
+            patronsData.get(i).add(patronsDataFirst[i][0]);
+            patronsData.get(i).add(patronsDataFirst[i][1]);
+        }
+
+        // patronsData.forEach((n) -> System.out.println(n));
+
+        int maxLengthArray = Math.max(adminsData.size(), Math.max(librariansData.size(), patronsData.size()));
+        for (int i = 0; i < maxLengthArray; i++) {
+            if (i == 0) {
+                allUserData.add(adminsData);
+            } else if (i == 1) {
+                allUserData.add(librariansData);
+            } else if (i == 2) {
+                allUserData.add(patronsData);
+            }
+        }
+
+        // allUserData.forEach((n) -> System.out.println(n));
     }
 
     private static void login() {
@@ -53,7 +84,7 @@ public class main {
         //     allUserData.add(new ArrayList<>(List.of(adminDataYes[i])));
         // }
 
-        allUserData.forEach((n) -> System.out.println(n)); 
+        // allUserData.forEach((n) -> System.out.println(n)); 
 
         System.out.println("WELCOME! LOGIN FIRST!");
         System.out.print("-- USERNAME : ");
@@ -77,5 +108,14 @@ public class main {
         } else {
             System.out.println("!!! INPUT INVALID !!!");
         }
+
+
+        // Checking the username to the real data
+        for (int i = 0; i < adminsData.size(); i++) {
+            if (username.equals(adminsData.get(i).get(0))) {
+                System.out.println("HEY BRO!");
+            }
+        }
+
     }
 }
