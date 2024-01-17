@@ -31,6 +31,9 @@ public class main {
 
     static String username;
     static int password;
+
+    static String userType;
+    static int userIndexArray;
     public static void main(String[] args) {
         loadData();
         login();
@@ -79,42 +82,49 @@ public class main {
     }
 
     private static void login() {
-
-        // for (int i = 0; i < adminDataYes.length; i++) {
-        //     allUserData.add(new ArrayList<>(List.of(adminDataYes[i])));
-        // }
-
-        // allUserData.forEach((n) -> System.out.println(n)); 
-
         System.out.println("WELCOME! LOGIN FIRST!");
         System.out.print("-- USERNAME : ");
         username = scan1.nextLine();
         System.out.print("-- PASSWORD : ");
         password = scan1.nextInt();
-        
+
         for (int i = 0; i < allUserData.size(); i++) {
-            
+            allUserData.get(i);
+            ArrayList<ArrayList<String>> eachUserData = allUserData.get(i);
+            for (int j = 0; j < eachUserData.size(); j++) {
+                if ((username.toUpperCase()).equals(eachUserData.get(j).get(0))) {
+                    System.out.println("YOU'RE GOOD BRO!");
+                    userType = Integer.toString(i);
+                    userIndexArray = j;
+                }
+            }
         }
 
-        if ((username.toUpperCase()).equals("ADMIN")) {
+        // System.out.println("DATA CHECKING -> \n" +
+        // "-- userType : " + userType + "\n" +
+        // "-- userIndexArray : " + userIndexArray + "\n");
+
+        if (userType.equals("0") ) {
+            userType = "ADMIN";
+        } else if (userType.equals("1")) {
+            userType = "LIBRARIAN";
+        } else if (userType.equals("2")) {
+            userType = "PATRON";
+        } else {
+            userType = "WRONG ACCOUNT";
+        }
+
+        if (userType.equals("ADMIN")) {
             System.out.println("THIS IS ADMIN MENU");
             System.out.println(
                 "   1. LIBRARIAN SETTINGS\n"+
                 "   2. CHECK SYSTEM");
-        } else if ((username.toUpperCase()).equals("LIBRARIAN")) {
+        } else if (userType.equals("LIBRARIAN")) {
             System.out.println("THIS IS LIBRARIAN MENU");
-        } else if ((username.toUpperCase()).equals("PATRON")) {
+        } else if (userType.equals("PATRON")) {
             System.out.println("THIS IS PATRON MENU");
         } else {
             System.out.println("!!! INPUT INVALID !!!");
-        }
-
-
-        // Checking the username to the real data
-        for (int i = 0; i < adminsData.size(); i++) {
-            if (username.equals(adminsData.get(i).get(0))) {
-                System.out.println("HEY BRO!");
-            }
         }
 
     }
