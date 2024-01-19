@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -10,6 +11,10 @@ public class main {
     static ArrayList<ArrayList<String>> adminsData = new ArrayList<>();
     static ArrayList<ArrayList<String>> librariansData = new ArrayList<>();
     static ArrayList<ArrayList<String>> patronsData = new ArrayList<>();
+    
+    static ArrayList<ArrayList<ArrayList<String>>> libraryCollections = new ArrayList<>();
+    static ArrayList<ArrayList<String>> booksDatabase = new ArrayList<>();
+
 
     static String [][] adminsDataFirst = { 
         {"BUDI", "1234"},
@@ -38,6 +43,8 @@ public class main {
 
     static int userInputMenu;
 
+
+    //////////////// PRIMARY METHODS ////////////////
     private static void loadData() {
         for (int i = 0; i < adminsDataFirst.length; i++) {
             adminsData.add(new ArrayList<>());
@@ -80,8 +87,10 @@ public class main {
         // allUserData.forEach((n) -> System.out.println(n));
     }
 
+    //////////////// PRIMARY METHODS ////////////////
     private static void login() {
         clearScreen();
+
         System.out.println("WELCOME! LOGIN FIRST!");
         System.out.print("-- USERNAME : ");
         username = scan2.nextLine();
@@ -116,8 +125,10 @@ public class main {
         generalMenu();
     }
 
+    //////////////// PRIMARY METHODS ////////////////
     private static void generalMenu() {
         clearScreen();
+
         if (userType.equals("ADMIN")) {
             adminsMenu();
         } else if (userType.equals("LIBRARIAN")) {
@@ -129,9 +140,15 @@ public class main {
         }
     }
 
+
+    ///////////////////////////////////////////////////
+
+
     ////////////////////// ADMIN //////////////////////
+    //------------------ MAIN MENU ------------------//
     private static void adminsMenu() {
         clearScreen();
+
         System.out.print(
             "-- ADMIN MENU --\n" +
             "   1. LIBRARIAN SETTINGS\n"+
@@ -141,25 +158,36 @@ public class main {
             "INPUT MENU -> "
         );
         userInputMenu = scan1.nextInt();
+        scan1.nextLine();
     }
 
+
+
+
+
     ////////////////////// LIBRAIAN //////////////////////
+    //------------------ MAIN MENU ------------------//
     private static void librariansMenu() {
         clearScreen();
+
         System.out.print(
             "-- LIBRARIAN MENU --\n" + 
-            "   1. MANAGE BOOKS\n" + 
+            "   1. MANAGE LIBRARY COLLECTIONS\n" + 
             "   2. MANAGE PATRONS\n" +
+            "   3. BROADCAST\n" +
             "   99. BACK\n" +
             "   00. EXIT\n" +
             "INPUT MENU -> "
         );
         userInputMenu = scan1.nextInt();
+        scan1.nextLine();
 
         if (userInputMenu == 1) {
-            manageBooksMenu();
+            manageLibraryCollectionsMenu();
         } else if (userInputMenu == 2) {
             managePatronsMenu();
+        } else if (userInputMenu == 3) {
+            sendBroadcast();
         } else if (userInputMenu == 99) {
             login();
         } else if (userInputMenu == 00) {
@@ -169,16 +197,18 @@ public class main {
         }
     }
 
-    private static void manageBooksMenu() {
+    private static void manageLibraryCollectionsMenu() {
         clearScreen();
+
         System.out.print(
-            "-- MANAGE BOOKS MENU --\n" + 
+            "-- MANAGE LIBRARY COLLECTIONS MENU --\n" + 
             "   1. ADD COLLECTIONS\n" + 
             "   2. SEARCH COLLECTIONS\n" + 
             "   99. BACK\n" +
             "INPUT MENU -> "
         );
         userInputMenu = scan1.nextInt();
+        scan1.nextLine();
 
         if (userInputMenu == 1) {
             addCollectionsMenu();
@@ -193,43 +223,101 @@ public class main {
 
     private static void addCollectionsMenu() {
         clearScreen();
+
         System.out.print(
             "-- ADD LIBRARY COLLECTIONS --\n" +
             "   1. BOOKS\n" + 
             "   2. RESEARCH JOURNALS\n" +
-            "   3. NEWSPAPERS\n" +
-            "   4. MAGAZINES\n" +
-            "   5. ARTWORKS\n" +
-            "   6. OTHER ITEMS\n" +
+            "   3. HERITAGE ITEMS\n" +
+            "   4. NEWSPAPERS\n" +
+            "   5. MAGAZINES\n" +
+            "   6. ARTWORKS\n" +
+            "   7. OTHER ITEMS\n" +
             "   99. BACK\n" +
             "INPUT MENU -> "
         );
         userInputMenu = scan1.nextInt();
+        scan1.nextLine();
 
         if (userInputMenu == 1) {
             addBooks();
         } else if (userInputMenu == 2) {
             addResearchJournals();
         } else if (userInputMenu == 3) {
-            addNewspapers();
+            addHeritageItems();
         } else if (userInputMenu == 4) {
-            addMagazines();
+            addNewspapers();
         } else if (userInputMenu == 5) {
-            addArtworks();
+            addMagazines();
         } else if (userInputMenu == 6) {
+            addArtworks();
+        } else if (userInputMenu == 7) {
             addOtherItems();
         } else if (userInputMenu == 99) {
-            manageBooksMenu();
+            manageLibraryCollectionsMenu();
         } else {
             displayInvalidInput();
         }
     }
 
     private static void addBooks() {
+        clearScreen();
 
+        String [] newBook = new String[6];
+        System.out.println("ADD BOOKS HERE!");
+        System.out.print(" - TITLE            : ");
+        newBook[0] = scan1.nextLine();
+        System.out.print(" - AUTHOR           : ");
+        newBook[1] = scan1.nextLine();
+        System.out.print(" - PUBLISHER        : ");
+        newBook[2] = scan1.nextLine();
+        System.out.print(" - PUBLICATION YEAR : ");
+        newBook[3] = scan1.nextLine();
+        System.out.print(" - ISBN             : ");
+        newBook[4] = scan1.nextLine();
+        System.out.print(" - SOURCE           : ");
+        newBook[5] = scan1.nextLine();
+        System.out.print(
+            "=====================================\n" +
+            "CONFIRMATION [1/0] -> "
+        );
+        userInputMenu = scan1.nextInt();
+        scan1.nextLine();
+
+        if (userInputMenu == 1) {
+            newBookToDatabase(newBook);
+        } else if (userInputMenu == 0) {
+            newBookCancelled();
+        } else {
+            displayInvalidInput();
+        }
+
+        // For monitoring [!]
+        // for (String myString : newBook) {
+        //     System.out.println(myString);
+        // }
+    }
+
+    private static void newBookToDatabase(String[] newDataBook) {
+        booksDatabase.add(new ArrayList<>(Arrays.asList(newDataBook)));
+
+        // For monitoring [!]
+        // booksDatabase.forEach((n) -> System.out.println(n));
+    }
+
+    private static void newBookCancelled() {
+        clearScreen();
+
+        System.out.println("ADDING BOOK IS CANCELLED");
+        enterForContinue();
+        generalMenu();
     }
 
     private static void addResearchJournals() {
+
+    }
+
+    private static void addHeritageItems() {
 
     }
 
@@ -252,13 +340,14 @@ public class main {
     private static void searchCollectionsMenu() {
         clearScreen();
         System.out.print(
-            "-- SEARCH LIBRARY COLLECTIONS --\n" +
+            "-- ADD LIBRARY COLLECTIONS --\n" +
             "   1. BOOKS\n" + 
             "   2. RESEARCH JOURNALS\n" +
-            "   3. NEWSPAPERS\n" +
-            "   4. MAGAZINES\n" +
-            "   5. ARTWORKS\n" +
-            "   6. OTHER ITEMS\n" +
+            "   3. HERITAGE ITEMS\n" +
+            "   4. NEWSPAPERS\n" +
+            "   5. MAGAZINES\n" +
+            "   6. ARTWORKS\n" +
+            "   7. OTHER ITEMS\n" +
             "   99. BACK\n" +
             "INPUT MENU -> "
         );
@@ -269,15 +358,17 @@ public class main {
         } else if (userInputMenu == 2) {
             searchResearchJournals();
         } else if (userInputMenu == 3) {
-            searchNewspapers();
+            searchHeritageItems();
         } else if (userInputMenu == 4) {
-            searchMagazines();
+            searchNewspapers();
         } else if (userInputMenu == 5) {
-            searchArtworks();
+            searchMagazines();
         } else if (userInputMenu == 6) {
+            searchArtworks();
+        } else if (userInputMenu == 7) {
             searchOtherItems();
         } else if (userInputMenu == 99) {
-            manageBooksMenu();
+            manageLibraryCollectionsMenu();
         } else {
             displayInvalidInput();
         }
@@ -288,6 +379,10 @@ public class main {
     }
 
     private static void searchResearchJournals() {
+
+    }
+
+    private static void searchHeritageItems() {
 
     }
 
@@ -312,7 +407,6 @@ public class main {
         System.out.print(
             "-- MANAGE PATRONS MENU --\n" +
             "   1. VIEW BORROWER\n" +
-            "   2. BROADCAST\n" +
             "   99. BACK\n" +
             "INPUT MENU -> " 
         );
@@ -320,8 +414,6 @@ public class main {
 
         if (userInputMenu == 1) {
             viewBorrower();
-        } else if (userInputMenu == 2) {
-            sendBroadcast();
         } else if (userInputMenu == 99) {
             librariansMenu();
         } else {
@@ -344,7 +436,11 @@ public class main {
     }
 
 
+
+
+
     ////////////////////// PATRONS //////////////////////
+    //------------------- MAIN MENU -------------------//
     private static void patronsMenu() {
         clearScreen();
         System.out.print(
@@ -359,20 +455,36 @@ public class main {
         userInputMenu = scan1.nextInt();
     }
 
+
+    ///////////////////////////////////////////////////
+
+
+    ///////////////// USEFUL METHODS /////////////////
     private static void displayInvalidInput() {
         clearScreen();
+
         System.out.println("!!! INPUT INVALID !!!");
+
+        enterForContinue();
     }
 
     private static void exit() {
         clearScreen();
+
         System.out.println("! YOU'RE EXIT THE PROGRAM !");
+    }
+
+    private static void enterForContinue() {
+        System.out.print("ENTER FOR CONTINUE -> ");
+        String myEnter = scan1.nextLine();
     }
 
     private static void clearScreen() {
         System.out.println("\033[H\033[2J");
 		System.out.flush();
     }
+
+
 
     public static void main(String[] args) {
         loadData();
