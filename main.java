@@ -340,7 +340,7 @@ public class main {
     private static void searchCollectionsMenu() {
         clearScreen();
         System.out.print(
-            "-- ADD LIBRARY COLLECTIONS --\n" +
+            "-- SEARCH LIBRARY COLLECTIONS --\n" +
             "   1. BOOKS\n" + 
             "   2. RESEARCH JOURNALS\n" +
             "   3. HERITAGE ITEMS\n" +
@@ -430,9 +430,82 @@ public class main {
 
     private static void sendBroadcast() {
         clearScreen();
-        System.out.println(
-            "SEND BROADCAST TO PATRONS!"
+        System.out.print(
+            "SEND BROADCAST!\n" +
+            "   1. IN LIBRARY\n" +
+            "   2. TO PATRONS\n"+
+            "   99. BACK\n" +
+            "INPUT MENU -> "
         );
+
+        userInputMenu = scan1.nextInt();
+        scan1.nextLine();
+
+        if (userInputMenu == 1) {
+            broadcastInLibrary();
+        } else if (userInputMenu == 2) {
+            broadcastToPatrons();
+        } else if (userInputMenu == 99) {
+            librariansMenu();
+        } else {
+            displayInvalidInput();
+        }
+    }
+
+    private static void broadcastInLibrary() {
+        clearScreen();
+
+        System.out.print(
+            "= LIBRARY =\n" +
+            "----------------------------------------------\n" +
+            "TYPE THE MESSAGE -> " 
+        );
+        String broadcastMessageLibrary = scan1.nextLine();
+
+        System.out.print(
+            "\n" +
+            "===============================================\n" +
+            broadcastMessageLibrary + "\n" +
+            "===============================================\n" +
+            "\n" +
+            "BACK <99> >>> "
+        );
+
+        userInputMenu = scan1.nextInt();
+
+        if (userInputMenu == 99) {
+            sendBroadcast();
+        } else {
+            displayInvalidInput();
+        }
+    }
+
+    private static void broadcastToPatrons() {
+        clearScreen();
+
+        System.out.print(
+            "= PATRONS =\n" +
+            "----------------------------------------------\n" +
+            "TYPE THE MESSAGE -> " 
+        );
+        String broadcastMessagePatrons = scan1.nextLine();
+
+        System.out.print(
+            "\n" +
+            "===============================================\n" +
+            broadcastMessagePatrons + "\n" +
+            "===============================================\n" +
+            "\n" +
+            "BACK <99> >>> "
+        );
+
+        userInputMenu = scan1.nextInt();
+
+        if (userInputMenu == 99) {
+            sendBroadcast();
+        } else {
+            displayInvalidInput();
+        }
     }
 
 
