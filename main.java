@@ -1,3 +1,5 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -14,6 +16,8 @@ public class main {
     
     static ArrayList<ArrayList<ArrayList<String>>> libraryCollections = new ArrayList<>();
     static ArrayList<ArrayList<String>> booksDatabase = new ArrayList<>();
+
+    static LocalDateTime currentDateTime = LocalDateTime.now();
 
 
     static String [][] adminsDataFirst = { 
@@ -84,7 +88,7 @@ public class main {
             }
         }
 
-        // allUserData.forEach((n) -> System.out.println(n));
+        allUserData.forEach((n) -> System.out.println(n));
     }
 
     //////////////// PRIMARY METHODS ////////////////
@@ -458,14 +462,98 @@ public class main {
         System.out.print(
             "= LIBRARY =\n" +
             "----------------------------------------------\n" +
-            "TYPE THE MESSAGE -> " 
+            "TYPE THE MESSAGE\n"  +
+            "> "
         );
-        String broadcastMessageLibrary = scan1.nextLine();
+
+        StringBuilder multipleLineMessage = new StringBuilder();
+        String broadcastMessageLibrary;
+
+        while (!(broadcastMessageLibrary = scan1.nextLine()).equalsIgnoreCase("exit")) {
+            System.out.print("> ");
+            multipleLineMessage.append("> " + broadcastMessageLibrary + "\n");
+        }
+
+        System.out.println("");
+        loadingLine();
 
         System.out.print(
             "\n" +
+            " From: " + username.toUpperCase() + " (Librarian)\n" +
+            " To: Library visitors\n" +
+            "\n" +
+            " " + getCurrentDate() + "\n" +
+            " " + getCurrentTime() + "\n" +
+            "\n" +
+            multipleLineMessage.toString() + "\n" +
             "===============================================\n" +
-            broadcastMessageLibrary + "\n" +
+            "\n" +
+            "BACK <99> >>> "
+        );
+
+        userInputMenu = scan1.nextInt();
+
+        if (userInputMenu == 99) {
+            sendBroadcast();
+        } else {
+            displayInvalidInput();
+        }
+    }
+    
+    private static void broadcastToPatrons() {
+        clearScreen();
+
+        System.out.print(
+            "= PATRONS =\n" +
+            "   1. ALL PATRONS\n" +
+            "   2. SPECIFIC PATRONS\n" +
+            "   99. BACK\n" +
+            "INPUT MENU -> "
+        );
+        userInputMenu = scan1.nextInt();
+        scan1.nextLine();
+
+        if (userInputMenu == 1) {
+            broadcastToAllPatrons();
+        } else if (userInputMenu == 2) {
+            broadcastToSpecificPatrons();
+        } else if (userInputMenu == 99) {
+            sendBroadcast();
+        } else {
+            displayInvalidInput();
+        }
+    }
+
+    private static void broadcastToAllPatrons() {
+        clearScreen();
+
+        System.out.print(
+            "= ALL PATRONS =\n" +
+            "----------------------------------------------\n" +
+            "TYPE THE MESSAGE\n"  +
+            "> "
+        );
+
+        StringBuilder multipleLineMessage = new StringBuilder();
+        String broadcastMessageAllPatrons;
+
+        while (!(broadcastMessageAllPatrons = scan1.nextLine()).equalsIgnoreCase("exit")) {
+            System.out.print("> ");
+            multipleLineMessage.append("> " + broadcastMessageAllPatrons + "\n");
+        }
+
+        System.out.println("");
+        loadingLine();
+        
+        System.out.print(
+            "\n" +
+            " From: " + username.toUpperCase() + " (Librarian)\n" +
+            " To: All patrons\n" +
+            "\n" +
+            " " + getCurrentDate() + "\n" +
+            " " + getCurrentTime() + "\n" +
+            "\n" +
+            multipleLineMessage.toString() + "\n" +
             "===============================================\n" +
             "\n" +
             "BACK <99> >>> "
@@ -480,31 +568,64 @@ public class main {
         }
     }
 
-    private static void broadcastToPatrons() {
+    private static void broadcastToSpecificPatrons() {
         clearScreen();
 
         System.out.print(
-            "= PATRONS =\n" +
+            "= SPECIFIC PATRON =\n" +
             "----------------------------------------------\n" +
-            "TYPE THE MESSAGE -> " 
+            "TO : "
         );
-        String broadcastMessagePatrons = scan1.nextLine();
+        String patronName = scan1.nextLine();
 
-        System.out.print(
-            "\n" +
-            "===============================================\n" +
-            broadcastMessagePatrons + "\n" +
-            "===============================================\n" +
-            "\n" +
-            "BACK <99> >>> "
-        );
+        boolean isPatronNameValid = false;
+        for (int i = 0; i < allUserData.get(2).size(); i++) {
+            if (patronName.equalsIgnoreCase(allUserData.get(2).get(i).get(0))) {
+                isPatronNameValid = true;
+            }
+        }
 
-        userInputMenu = scan1.nextInt();
+        if (isPatronNameValid) {
+            System.out.print(
+                "TYPE THE MESSAGE\n" +
+                "> "
+            );
 
-        if (userInputMenu == 99) {
-            sendBroadcast();
+            StringBuilder multipleLineMessage = new StringBuilder();
+            String broadcastMessageSpecificPatron;
+
+            while (!(broadcastMessageSpecificPatron = scan1.nextLine()).equalsIgnoreCase("exit")) {
+                System.out.print("> ");
+                multipleLineMessage.append("> " + broadcastMessageSpecificPatron + "\n");
+            }
+
+            System.out.println("");
+            loadingLine();
+
+            System.out.print(
+                "\n" +
+                " From: " + username.toUpperCase() + " (Librarian)\n" +
+                " To: " + patronName.toUpperCase() + "\n" +
+                "\n" +
+                " " + getCurrentDate() + "\n" +
+                " " + getCurrentTime() + "\n" +
+                "\n" +
+                multipleLineMessage.toString() + "\n" +
+                "===============================================\n" +
+                "\n" +
+                "BACK <99> >>> "
+            );
+
+            userInputMenu = scan1.nextInt();
+
+            if (userInputMenu == 99) {
+                sendBroadcast();
+            } else {
+                displayInvalidInput();
+            }
         } else {
             displayInvalidInput();
+            broadcastToSpecificPatrons();
         }
     }
 
@@ -552,9 +673,35 @@ public class main {
         String myEnter = scan1.nextLine();
     }
 
+    private static void loadingLine() {
+        String loadingText = "===============================================";
+        for (char c : loadingText.toCharArray()) {
+            System.out.print(c);
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     private static void clearScreen() {
         System.out.println("\033[H\033[2J");
 		System.out.flush();
+    }
+
+    private static String getCurrentDate() {
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String formattedDate = currentDateTime.format(dateFormatter);
+
+        return formattedDate;
+    }
+
+    private static String getCurrentTime() {
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+        String formattedTime = currentDateTime.format(timeFormatter);
+
+        return formattedTime;
     }
 
 
