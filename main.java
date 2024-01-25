@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class main {
-    static Scanner scan1 = new Scanner(System.in);
+    public static Scanner scan1 = new Scanner(System.in);
     static Scanner scan2 = new Scanner(System.in);
 
     static ArrayList<ArrayList<ArrayList<String>>> allUserData = new ArrayList<>();
@@ -45,7 +45,7 @@ public class main {
     static String userType;
     static int userIndexArray;
 
-    static int userInputMenu;
+    public static int userInputMenu;
 
 
     //////////////// PRIMARY METHODS ////////////////
@@ -88,7 +88,7 @@ public class main {
             }
         }
 
-        allUserData.forEach((n) -> System.out.println(n));
+        // allUserData.forEach((n) -> System.out.println(n));
     }
 
     //////////////// PRIMARY METHODS ////////////////
@@ -134,7 +134,7 @@ public class main {
         clearScreen();
 
         if (userType.equals("ADMIN")) {
-            adminsMenu();
+            admin.adminsMenu();
         } else if (userType.equals("LIBRARIAN")) {
             librariansMenu();
         } else if (userType.equals("PATRON")) {
@@ -146,27 +146,6 @@ public class main {
 
 
     ///////////////////////////////////////////////////
-
-
-    ////////////////////// ADMIN //////////////////////
-    //------------------ MAIN MENU ------------------//
-    private static void adminsMenu() {
-        clearScreen();
-
-        System.out.print(
-            "-- ADMIN MENU --\n" +
-            "   1. LIBRARIAN SETTINGS\n"+
-            "   2. CHECK SYSTEM\n" +
-            "   99. BACK\n" +
-            "   00. EXIT\n" +
-            "INPUT MENU -> "
-        );
-        userInputMenu = scan1.nextInt();
-        scan1.nextLine();
-    }
-
-
-
 
 
     ////////////////////// LIBRAIAN //////////////////////
@@ -685,7 +664,7 @@ public class main {
         }
     }
 
-    private static void clearScreen() {
+    public static void clearScreen() {
         System.out.println("\033[H\033[2J");
 		System.out.flush();
     }
