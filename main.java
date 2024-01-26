@@ -9,13 +9,13 @@ public class main {
     public static Scanner scan1 = new Scanner(System.in);
     static Scanner scan2 = new Scanner(System.in);
 
-    static ArrayList<ArrayList<ArrayList<String>>> allUserData = new ArrayList<>();
+    public static ArrayList<ArrayList<ArrayList<String>>> allUserData = new ArrayList<>();
     static ArrayList<ArrayList<String>> adminsData = new ArrayList<>();
     static ArrayList<ArrayList<String>> librariansData = new ArrayList<>();
     static ArrayList<ArrayList<String>> patronsData = new ArrayList<>();
     
     static ArrayList<ArrayList<ArrayList<String>>> libraryCollections = new ArrayList<>();
-    static ArrayList<ArrayList<String>> booksDatabase = new ArrayList<>();
+    public static ArrayList<ArrayList<String>> booksDatabase = new ArrayList<>();
 
     static LocalDateTime currentDateTime = LocalDateTime.now();
 
@@ -39,7 +39,7 @@ public class main {
         {"ALEXANDER", "9898"}
     };
 
-    static String username;
+    public static String username;
     static int password;
 
     static String userType;
@@ -92,7 +92,7 @@ public class main {
     }
 
     //////////////// PRIMARY METHODS ////////////////
-    private static void login() {
+    public static void login() {
         clearScreen();
 
         System.out.println("WELCOME! LOGIN FIRST!");
@@ -130,13 +130,13 @@ public class main {
     }
 
     //////////////// PRIMARY METHODS ////////////////
-    private static void generalMenu() {
+    public static void generalMenu() {
         clearScreen();
 
         if (userType.equals("ADMIN")) {
             admin.adminsMenu();
         } else if (userType.equals("LIBRARIAN")) {
-            librariansMenu();
+            librarian.librariansMenu();
         } else if (userType.equals("PATRON")) {
             patronsMenu();
         } else {
@@ -146,470 +146,6 @@ public class main {
 
 
     ///////////////////////////////////////////////////
-
-
-    ////////////////////// LIBRAIAN //////////////////////
-    //------------------ MAIN MENU ------------------//
-    private static void librariansMenu() {
-        clearScreen();
-
-        System.out.print(
-            "-- LIBRARIAN MENU --\n" + 
-            "   1. MANAGE LIBRARY COLLECTIONS\n" + 
-            "   2. MANAGE PATRONS\n" +
-            "   3. BROADCAST\n" +
-            "   99. BACK\n" +
-            "   00. EXIT\n" +
-            "INPUT MENU -> "
-        );
-        userInputMenu = scan1.nextInt();
-        scan1.nextLine();
-
-        if (userInputMenu == 1) {
-            manageLibraryCollectionsMenu();
-        } else if (userInputMenu == 2) {
-            managePatronsMenu();
-        } else if (userInputMenu == 3) {
-            sendBroadcast();
-        } else if (userInputMenu == 99) {
-            login();
-        } else if (userInputMenu == 00) {
-            exit();
-        } else {
-            displayInvalidInput();
-        }
-    }
-
-    private static void manageLibraryCollectionsMenu() {
-        clearScreen();
-
-        System.out.print(
-            "-- MANAGE LIBRARY COLLECTIONS MENU --\n" + 
-            "   1. ADD COLLECTIONS\n" + 
-            "   2. SEARCH COLLECTIONS\n" + 
-            "   99. BACK\n" +
-            "INPUT MENU -> "
-        );
-        userInputMenu = scan1.nextInt();
-        scan1.nextLine();
-
-        if (userInputMenu == 1) {
-            addCollectionsMenu();
-        } else if (userInputMenu == 2) {
-            searchCollectionsMenu();
-        } else if (userInputMenu == 99) {
-            librariansMenu();
-        } else {
-            displayInvalidInput();
-        }
-    }
-
-    private static void addCollectionsMenu() {
-        clearScreen();
-
-        System.out.print(
-            "-- ADD LIBRARY COLLECTIONS --\n" +
-            "   1. BOOKS\n" + 
-            "   2. RESEARCH JOURNALS\n" +
-            "   3. HERITAGE ITEMS\n" +
-            "   4. NEWSPAPERS\n" +
-            "   5. MAGAZINES\n" +
-            "   6. ARTWORKS\n" +
-            "   7. OTHER ITEMS\n" +
-            "   99. BACK\n" +
-            "INPUT MENU -> "
-        );
-        userInputMenu = scan1.nextInt();
-        scan1.nextLine();
-
-        if (userInputMenu == 1) {
-            addBooks();
-        } else if (userInputMenu == 2) {
-            addResearchJournals();
-        } else if (userInputMenu == 3) {
-            addHeritageItems();
-        } else if (userInputMenu == 4) {
-            addNewspapers();
-        } else if (userInputMenu == 5) {
-            addMagazines();
-        } else if (userInputMenu == 6) {
-            addArtworks();
-        } else if (userInputMenu == 7) {
-            addOtherItems();
-        } else if (userInputMenu == 99) {
-            manageLibraryCollectionsMenu();
-        } else {
-            displayInvalidInput();
-        }
-    }
-
-    private static void addBooks() {
-        clearScreen();
-
-        String [] newBook = new String[6];
-        System.out.println("ADD BOOKS HERE!");
-        System.out.print(" - TITLE            : ");
-        newBook[0] = scan1.nextLine();
-        System.out.print(" - AUTHOR           : ");
-        newBook[1] = scan1.nextLine();
-        System.out.print(" - PUBLISHER        : ");
-        newBook[2] = scan1.nextLine();
-        System.out.print(" - PUBLICATION YEAR : ");
-        newBook[3] = scan1.nextLine();
-        System.out.print(" - ISBN             : ");
-        newBook[4] = scan1.nextLine();
-        System.out.print(" - SOURCE           : ");
-        newBook[5] = scan1.nextLine();
-        System.out.print(
-            "=====================================\n" +
-            "CONFIRMATION [1/0] -> "
-        );
-        userInputMenu = scan1.nextInt();
-        scan1.nextLine();
-
-        if (userInputMenu == 1) {
-            newBookToDatabase(newBook);
-        } else if (userInputMenu == 0) {
-            newBookCancelled();
-        } else {
-            displayInvalidInput();
-        }
-
-        // For monitoring [!]
-        // for (String myString : newBook) {
-        //     System.out.println(myString);
-        // }
-    }
-
-    private static void newBookToDatabase(String[] newDataBook) {
-        booksDatabase.add(new ArrayList<>(Arrays.asList(newDataBook)));
-
-        // For monitoring [!]
-        // booksDatabase.forEach((n) -> System.out.println(n));
-    }
-
-    private static void newBookCancelled() {
-        clearScreen();
-
-        System.out.println("ADDING BOOK IS CANCELLED");
-        enterForContinue();
-        generalMenu();
-    }
-
-    private static void addResearchJournals() {
-
-    }
-
-    private static void addHeritageItems() {
-
-    }
-
-    private static void addNewspapers() {
-
-    }
-
-    private static void addMagazines() {
-
-    }
-
-    private static void addArtworks() {
-
-    }
-
-    private static void addOtherItems() {
-
-    }
-
-    private static void searchCollectionsMenu() {
-        clearScreen();
-        System.out.print(
-            "-- SEARCH LIBRARY COLLECTIONS --\n" +
-            "   1. BOOKS\n" + 
-            "   2. RESEARCH JOURNALS\n" +
-            "   3. HERITAGE ITEMS\n" +
-            "   4. NEWSPAPERS\n" +
-            "   5. MAGAZINES\n" +
-            "   6. ARTWORKS\n" +
-            "   7. OTHER ITEMS\n" +
-            "   99. BACK\n" +
-            "INPUT MENU -> "
-        );
-        userInputMenu = scan1.nextInt();
-
-        if (userInputMenu == 1) {
-            searchBooks();
-        } else if (userInputMenu == 2) {
-            searchResearchJournals();
-        } else if (userInputMenu == 3) {
-            searchHeritageItems();
-        } else if (userInputMenu == 4) {
-            searchNewspapers();
-        } else if (userInputMenu == 5) {
-            searchMagazines();
-        } else if (userInputMenu == 6) {
-            searchArtworks();
-        } else if (userInputMenu == 7) {
-            searchOtherItems();
-        } else if (userInputMenu == 99) {
-            manageLibraryCollectionsMenu();
-        } else {
-            displayInvalidInput();
-        }
-    }
-
-    private static void searchBooks() {
-
-    }
-
-    private static void searchResearchJournals() {
-
-    }
-
-    private static void searchHeritageItems() {
-
-    }
-
-    private static void searchNewspapers() {
-
-    }
-
-    private static void searchMagazines() {
-
-    }
-
-    private static void searchArtworks() {
-
-    }
-
-    private static void searchOtherItems() {
-
-    }
-
-    private static void managePatronsMenu() {
-        clearScreen();
-        System.out.print(
-            "-- MANAGE PATRONS MENU --\n" +
-            "   1. VIEW BORROWER\n" +
-            "   99. BACK\n" +
-            "INPUT MENU -> " 
-        );
-        userInputMenu = scan1.nextInt();
-
-        if (userInputMenu == 1) {
-            viewBorrower();
-        } else if (userInputMenu == 99) {
-            librariansMenu();
-        } else {
-            displayInvalidInput();
-        }
-    }
-
-    private static void viewBorrower() {
-        clearScreen();
-        System.out.println(
-            "ALL BORROWER IN LIBRARY '(NAME)'"
-        );
-    }
-
-    private static void sendBroadcast() {
-        clearScreen();
-        System.out.print(
-            "SEND BROADCAST!\n" +
-            "   1. IN LIBRARY\n" +
-            "   2. TO PATRONS\n"+
-            "   99. BACK\n" +
-            "INPUT MENU -> "
-        );
-
-        userInputMenu = scan1.nextInt();
-        scan1.nextLine();
-
-        if (userInputMenu == 1) {
-            broadcastInLibrary();
-        } else if (userInputMenu == 2) {
-            broadcastToPatrons();
-        } else if (userInputMenu == 99) {
-            librariansMenu();
-        } else {
-            displayInvalidInput();
-        }
-    }
-
-    private static void broadcastInLibrary() {
-        clearScreen();
-
-        System.out.print(
-            "= LIBRARY =\n" +
-            "----------------------------------------------\n" +
-            "TYPE THE MESSAGE\n"  +
-            "> "
-        );
-
-        StringBuilder multipleLineMessage = new StringBuilder();
-        String broadcastMessageLibrary;
-
-        while (!(broadcastMessageLibrary = scan1.nextLine()).equalsIgnoreCase("exit")) {
-            System.out.print("> ");
-            multipleLineMessage.append("> " + broadcastMessageLibrary + "\n");
-        }
-
-        System.out.println("");
-        loadingLine();
-
-        System.out.print(
-            "\n" +
-            " From: " + username.toUpperCase() + " (Librarian)\n" +
-            " To: Library visitors\n" +
-            "\n" +
-            " " + getCurrentDate() + "\n" +
-            " " + getCurrentTime() + "\n" +
-            "\n" +
-            multipleLineMessage.toString() + "\n" +
-            "===============================================\n" +
-            "\n" +
-            "BACK <99> >>> "
-        );
-
-        userInputMenu = scan1.nextInt();
-
-        if (userInputMenu == 99) {
-            sendBroadcast();
-        } else {
-            displayInvalidInput();
-        }
-    }
-    
-    private static void broadcastToPatrons() {
-        clearScreen();
-
-        System.out.print(
-            "= PATRONS =\n" +
-            "   1. ALL PATRONS\n" +
-            "   2. SPECIFIC PATRONS\n" +
-            "   99. BACK\n" +
-            "INPUT MENU -> "
-        );
-        userInputMenu = scan1.nextInt();
-        scan1.nextLine();
-
-        if (userInputMenu == 1) {
-            broadcastToAllPatrons();
-        } else if (userInputMenu == 2) {
-            broadcastToSpecificPatrons();
-        } else if (userInputMenu == 99) {
-            sendBroadcast();
-        } else {
-            displayInvalidInput();
-        }
-    }
-
-    private static void broadcastToAllPatrons() {
-        clearScreen();
-
-        System.out.print(
-            "= ALL PATRONS =\n" +
-            "----------------------------------------------\n" +
-            "TYPE THE MESSAGE\n"  +
-            "> "
-        );
-
-        StringBuilder multipleLineMessage = new StringBuilder();
-        String broadcastMessageAllPatrons;
-
-        while (!(broadcastMessageAllPatrons = scan1.nextLine()).equalsIgnoreCase("exit")) {
-            System.out.print("> ");
-            multipleLineMessage.append("> " + broadcastMessageAllPatrons + "\n");
-        }
-
-        System.out.println("");
-        loadingLine();
-        
-        System.out.print(
-            "\n" +
-            " From: " + username.toUpperCase() + " (Librarian)\n" +
-            " To: All patrons\n" +
-            "\n" +
-            " " + getCurrentDate() + "\n" +
-            " " + getCurrentTime() + "\n" +
-            "\n" +
-            multipleLineMessage.toString() + "\n" +
-            "===============================================\n" +
-            "\n" +
-            "BACK <99> >>> "
-        );
-
-        userInputMenu = scan1.nextInt();
-
-        if (userInputMenu == 99) {
-            sendBroadcast();
-        } else {
-            displayInvalidInput();
-        }
-    }
-
-    private static void broadcastToSpecificPatrons() {
-        clearScreen();
-
-        System.out.print(
-            "= SPECIFIC PATRON =\n" +
-            "----------------------------------------------\n" +
-            "TO : "
-        );
-        String patronName = scan1.nextLine();
-
-        boolean isPatronNameValid = false;
-        for (int i = 0; i < allUserData.get(2).size(); i++) {
-            if (patronName.equalsIgnoreCase(allUserData.get(2).get(i).get(0))) {
-                isPatronNameValid = true;
-            }
-        }
-
-        if (isPatronNameValid) {
-            System.out.print(
-                "TYPE THE MESSAGE\n" +
-                "> "
-            );
-
-            StringBuilder multipleLineMessage = new StringBuilder();
-            String broadcastMessageSpecificPatron;
-
-            while (!(broadcastMessageSpecificPatron = scan1.nextLine()).equalsIgnoreCase("exit")) {
-                System.out.print("> ");
-                multipleLineMessage.append("> " + broadcastMessageSpecificPatron + "\n");
-            }
-
-            System.out.println("");
-            loadingLine();
-
-            System.out.print(
-                "\n" +
-                " From: " + username.toUpperCase() + " (Librarian)\n" +
-                " To: " + patronName.toUpperCase() + "\n" +
-                "\n" +
-                " " + getCurrentDate() + "\n" +
-                " " + getCurrentTime() + "\n" +
-                "\n" +
-                multipleLineMessage.toString() + "\n" +
-                "===============================================\n" +
-                "\n" +
-                "BACK <99> >>> "
-            );
-
-            userInputMenu = scan1.nextInt();
-
-            if (userInputMenu == 99) {
-                sendBroadcast();
-            } else {
-                displayInvalidInput();
-            }
-        } else {
-            displayInvalidInput();
-            broadcastToSpecificPatrons();
-        }
-    }
-
-
-
 
 
     ////////////////////// PATRONS //////////////////////
@@ -633,7 +169,7 @@ public class main {
 
 
     ///////////////// USEFUL METHODS /////////////////
-    private static void displayInvalidInput() {
+    public static void displayInvalidInput() {
         clearScreen();
 
         System.out.println("!!! INPUT INVALID !!!");
@@ -641,18 +177,18 @@ public class main {
         enterForContinue();
     }
 
-    private static void exit() {
+    public static void exit() {
         clearScreen();
 
         System.out.println("! YOU'RE EXIT THE PROGRAM !");
     }
 
-    private static void enterForContinue() {
+    public static void enterForContinue() {
         System.out.print("ENTER FOR CONTINUE -> ");
         String myEnter = scan1.nextLine();
     }
 
-    private static void loadingLine() {
+    public static void loadingLine() {
         String loadingText = "===============================================";
         for (char c : loadingText.toCharArray()) {
             System.out.print(c);
@@ -669,14 +205,14 @@ public class main {
 		System.out.flush();
     }
 
-    private static String getCurrentDate() {
+    public static String getCurrentDate() {
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String formattedDate = currentDateTime.format(dateFormatter);
 
         return formattedDate;
     }
 
-    private static String getCurrentTime() {
+    public static String getCurrentTime() {
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
         String formattedTime = currentDateTime.format(timeFormatter);
 
