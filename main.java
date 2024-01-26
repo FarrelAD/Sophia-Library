@@ -138,7 +138,7 @@ public class main {
         } else if (userType.equals("LIBRARIAN")) {
             librarian.librariansMenu();
         } else if (userType.equals("PATRON")) {
-            patronsMenu();
+            patron.patronsMenu();
         } else {
             displayInvalidInput();
         }
@@ -149,20 +149,7 @@ public class main {
 
 
     ////////////////////// PATRONS //////////////////////
-    //------------------- MAIN MENU -------------------//
-    private static void patronsMenu() {
-        clearScreen();
-        System.out.print(
-            "-- PATRON MENU --\n" +
-            "   1. BORROW BOOKS\n" +
-            "   2. SEARCH BOOKS\n" +
-            "   3. EXTEND LOAN PERIOD\n" +
-            "   99. BACK\n" +
-            "   00. EXIT\n" +
-            "INPUT MENU -> "
-        );
-        userInputMenu = scan1.nextInt();
-    }
+
 
 
     ///////////////////////////////////////////////////
