@@ -1,2 +1,2 @@
-# MyLibrary-Library-Management-System
-A functional library management system
+# Sophia Library
+A haven for intellectual exploration and literary journeys.
