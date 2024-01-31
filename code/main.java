@@ -18,6 +18,8 @@ public class main {
     static ArrayList<ArrayList<ArrayList<String>>> libraryCollections = new ArrayList<>();
     public static ArrayList<ArrayList<String>> booksDatabase = new ArrayList<>();
 
+    public static ArrayList<ArrayList<ArrayList<String>>> borrowedBooksDatabase = new ArrayList<>();
+
     static LocalDateTime currentDateTime = LocalDateTime.now();
 
 
