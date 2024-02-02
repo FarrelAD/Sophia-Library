@@ -13,7 +13,7 @@ public class patron {
             "-- PATRON MENU --\n" +
             "   1. BORROW BOOKS\n" +
             "   2. SEARCH COLLECTIONS\n" +
-            "   3. EXTEND LOAN PERIOD\n" +
+            "   3. RENEW A BOOK\n" +
             "   99. BACK\n" +
             "   00. EXIT\n" +
             "INPUT MENU -> "
@@ -26,7 +26,7 @@ public class patron {
         } else if (userInputMenu == 2) {
             searchCollectionsMenu();
         } else if (userInputMenu == 3) {
-            extendLoanPeriod();
+            renewABookMenu();
         } else if (userInputMenu == 99) {
             main.login();
         } else if (userInputMenu == 00) {
@@ -48,7 +48,7 @@ public class patron {
         int bookAmount = scan1.nextInt();
         scan1.nextLine();
 
-        if (bookAmount > 3 && bookAmount != 99) {
+        if (bookAmount > 3 && bookAmount != 99 || bookAmount == 0) {
             displayLimitBorrowedBooks();
         } else if (bookAmount == 99) {
             patronsMenu();
@@ -100,9 +100,9 @@ public class patron {
     private static void displayLimitBorrowedBooks() {
         main.clearScreen();
         System.out.println(
-            "=====================================\n" +
-            "SORRY, YOU CAN'T BORROW MORE THAN 3 BOOKS!\n" +
-            "====================================="
+            "=======================================\n" +
+            "SORRY, YOU CAN ONLY BORROW 1 TO 3 BOOKS\n" +
+            "======================================="
         );
         main.enterForContinue();
         borrowBooksMenu();
@@ -116,11 +116,32 @@ public class patron {
         );
     }
 
-    private static void extendLoanPeriod() {
+    private static void renewABookMenu() {
         main.clearScreen();
 
-        System.out.println(
-            "-- EXTEND LOAN PERIOD MENU --"
+        System.out.print(
+            "-- RENEW A BOOK MENU --\n" +
+            "========================================================\n" +
+            "   IMPORTANT:\n" +
+            " - You can renew a book up to 2 days before the due date\n" +
+            " - Each renewal allows for an additional week\n" +
+            " - For non-student member can only renew 1 time\n" +
+            " - For student member can renew up to 2 times\n" +
+            " - Call center: 0101-2323-5555\n" +
+            "=======================================================\n" +
+            " - BOOK NAME       : "
         );
+        String bookName = scan1.nextLine();
+
+        System.out.print(" - BOOK CODE       : ");
+        int bookCode = scan1.nextInt();
+        scan1.nextLine();
+
+        System.out.println(
+            "----------------------------------------------------------------\n"+
+            "SUCCESS! THE BOOK BORROWING PERIOD HAS BEEN EXTENDED BY ONE WEEK"
+        );
+        main.enterForContinue();
+        patronsMenu();
     }
 }
