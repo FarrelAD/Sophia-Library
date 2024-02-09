@@ -1,9 +1,8 @@
 package code;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
 
 public class main {
@@ -21,7 +20,6 @@ public class main {
     public static ArrayList<ArrayList<ArrayList<String>>> borrowedBooksDatabase = new ArrayList<>();
 
     static LocalDateTime currentDateTime = LocalDateTime.now();
-
 
     static String [][] adminsDataFirst = { 
         {"BUDI", "1234"},
@@ -92,6 +90,9 @@ public class main {
         }
 
         // allUserData.forEach((n) -> System.out.println(n));
+
+        // Load MySQL database from data class
+        data.connection();
     }
 
     //////////////// PRIMARY METHODS ////////////////

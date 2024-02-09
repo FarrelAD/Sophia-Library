@@ -1,6 +1,5 @@
 package code;
-import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.Scanner;
 
 public class librarian {
@@ -106,20 +105,22 @@ public class librarian {
     private static void addBooks() {
         main.clearScreen();
 
-        String [] newBook = new String[6];
+        String [] newBook = new String[7];
         System.out.println("ADD BOOKS HERE!");
         System.out.print(" - TITLE            : ");
-        newBook[0] = scan1.nextLine();
-        System.out.print(" - AUTHOR           : ");
         newBook[1] = scan1.nextLine();
-        System.out.print(" - PUBLISHER        : ");
+        System.out.print(" - AUTHOR           : ");
         newBook[2] = scan1.nextLine();
-        System.out.print(" - PUBLICATION YEAR : ");
+        System.out.print(" - PUBLISHER        : ");
         newBook[3] = scan1.nextLine();
-        System.out.print(" - ISBN             : ");
+        System.out.print(" - PUBLICATION YEAR : ");
         newBook[4] = scan1.nextLine();
-        System.out.print(" - SOURCE           : ");
+        System.out.print(" - ISBN             : ");
         newBook[5] = scan1.nextLine();
+        System.out.print(" - SOURCE           : ");
+        newBook[6] = scan1.nextLine();
+        System.out.print(" - BOOK ID          : ");
+        newBook[0] = scan1.nextLine();
         System.out.print(
             "=====================================\n" +
             "CONFIRMATION [1/0] -> "
@@ -127,8 +128,14 @@ public class librarian {
         userInputMenu = scan1.nextInt();
         scan1.nextLine();
 
+        // Convert array into a String
+        String sqlQueryAddData = String.format("INSERT INTO sophia_books VALUES ('%s', '%s', '%s', '%s', %s, %s, '%s')", newBook[0], newBook[1], newBook[2], newBook[3], newBook[4], newBook[5], newBook[6]);
+
+        // For monitoring - QUERY [!]
+        // System.out.println("Query: " + sqlQueryAddData);
+
         if (userInputMenu == 1) {
-            newBookToDatabase(newBook);
+            newBookToDatabase(sqlQueryAddData);
         } else if (userInputMenu == 0) {
             newBookCancelled();
         } else {
@@ -141,11 +148,14 @@ public class librarian {
         // }
     }
 
-    private static void newBookToDatabase(String[] newDataBook) {
-        main.booksDatabase.add(new ArrayList<>(Arrays.asList(newDataBook)));
+    private static void newBookToDatabase(String sqlQuery) {
+        // main.booksDatabase.add(new ArrayList<>(Arrays.asList(newDataBook)));
 
         // For monitoring [!]
         // booksDatabase.forEach((n) -> System.out.println(n));
+
+        // Add new book data with MySQL
+        data.addToDatabase(sqlQuery);
     }
 
     private static void newBookCancelled() {
