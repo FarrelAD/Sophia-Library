@@ -1,5 +1,6 @@
 package code;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class librarian {
@@ -238,6 +239,95 @@ public class librarian {
         // Call method with SQL query as a argument
         String sqlQueryShowAllData = "SELECT * FROM sophia_books";
         data.showDatabase(sqlQueryShowAllData);
+
+        System.out.print(
+            "\n" +
+            "FILTER <69> \n" + 
+            "BACK <99> >>> "
+        );
+        userInputMenu = scan1.nextInt();
+        scan1.nextLine();
+
+        if (userInputMenu == 69) {
+            filterSearchBooks();
+        } else if (userInputMenu == 99) {
+            searchCollectionsMenu();
+        }
+    }
+
+    public static void filterSearchBooks() {
+        main.clearScreen();
+
+        ArrayList<String> filterQuery = new ArrayList<>();
+
+        System.out.print(
+            "FILL IN THE NECESSARY SECTIONS AND LEAVE THE UNNECESSARY PARTS BLANK\n" +
+            " - BOOK ID : "
+        );
+        String fBookId = scan1.nextLine();
+        System.out.print(" - BOOK TITLE   : ");
+        String fBookTitle = scan1.nextLine();
+        System.out.print(" - AUTHOR       : ");
+        String fAuthor = scan1.nextLine();
+        System.out.print(" - PUBLISHER      : ");
+        String fPublisher = scan1.nextLine();
+        System.out.print(" - PUBLICATION YEAR   : ");
+        String fPublicationYear = scan1.nextLine();
+        System.out.print(" - ISBN       : ");
+        String fIsbn = scan1.nextLine();
+        System.out.print(" - SOURCE       : ");
+        String fSource = scan1.nextLine();
+
+        if (!fBookId.isEmpty()) {
+            filterQuery.add("book_id = '" + fBookId + "'");
+        }
+
+        if (!fBookTitle.isEmpty()) {
+            filterQuery.add("title = '" + fBookTitle + "'");
+        }
+
+        if (!fAuthor.isEmpty()) {
+            filterQuery.add("author = '" + fAuthor + "'");
+        }
+
+        if (!fPublisher.isEmpty()) {
+            filterQuery.add("publisher = '" + fPublisher + "'");
+        }
+
+        if (!fPublicationYear.isEmpty()) {
+            filterQuery.add("publication_year = " + fPublicationYear);
+        }
+
+        if (!fIsbn.isEmpty()) {
+            filterQuery.add("isbn = " + fIsbn);
+        }
+
+        if (!fSource.isEmpty()) {
+            filterQuery.add("source = '" + fSource + "'");
+        }
+
+        // Concatenate the strings
+        String mergeFilter = String.join(", ", filterQuery);
+
+        // For monitoring
+        // System.out.println("Query (Original): " + filterQuery);
+        // System.out.println("Query 2: " + mergeFilter);
+
+        String sqlQueryShowFilteredData = "SELECT * FROM sophia_books WHERE " + mergeFilter;
+
+        // Called method to show the filtered database
+        main.clearScreen();
+        System.out.println("SHOWING FILTERED BOOKS");
+        main.loadingLine();
+
+        data.showDatabase(sqlQueryShowFilteredData);
+
+        System.out.print("\nBACK <99> >>> ");
+        userInputMenu = scan1.nextInt();
+
+        if (userInputMenu == 99) {
+            searchCollectionsMenu();
+        }
     }
 
     private static void searchResearchJournals() {
