@@ -205,6 +205,7 @@ public class librarian {
             "INPUT MENU -> "
         );
         userInputMenu = scan1.nextInt();
+        scan1.nextLine();
 
         if (userInputMenu == 1) {
             searchBooks();
@@ -228,7 +229,15 @@ public class librarian {
     }
 
     private static void searchBooks() {
+        main.clearScreen();
+        System.out.println("SHOWING ALL BOOKS COLLECTIONS");
+        main.loadingLine();
+        System.out.println("");
 
+
+        // Call method with SQL query as a argument
+        String sqlQueryShowAllData = "SELECT * FROM sophia_books";
+        data.showDatabase(sqlQueryShowAllData);
     }
 
     private static void searchResearchJournals() {

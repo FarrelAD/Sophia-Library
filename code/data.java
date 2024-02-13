@@ -3,6 +3,7 @@ package code;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
+import java.sql.ResultSet;
 
 public class data {
     static String DB_URL = "jdbc:mysql://localhost:3306/sophia_library";
@@ -32,6 +33,20 @@ public class data {
 
             // For monitoring - ADD NEW DATA [!]
             // System.out.println("TRY TO ADD NEW DATA!");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Method to show the database
+    public static void showDatabase(String sqlQuery) {
+        try (Statement stmt = conn.createStatement()) {
+            ResultSet rs = stmt.executeQuery(sqlQuery);
+
+            while (rs.next()) {
+                System.out.println(rs.getString(1) + " | " + rs.getString(2) + " | " + rs.getString(3) + " | " + rs.getString(4) + " | " + rs.getInt(5) + " | " + rs.getLong(6) + " | " + rs.getString(7));
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
