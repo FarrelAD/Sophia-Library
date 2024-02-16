@@ -46,7 +46,8 @@ public class librarian {
         System.out.print(
             "-- MANAGE LIBRARY COLLECTIONS MENU --\n" + 
             "   1. ADD COLLECTIONS\n" + 
-            "   2. SEARCH COLLECTIONS\n" + 
+            "   2. UPDATE COLLECTIONS\n" +
+            "   3. SEARCH COLLECTIONS\n" + 
             "   99. BACK\n" +
             "INPUT MENU -> "
         );
@@ -56,6 +57,8 @@ public class librarian {
         if (userInputMenu == 1) {
             addCollectionsMenu();
         } else if (userInputMenu == 2) {
+            updateCollectionsMenu();
+        } else if (userInputMenu == 3) {
             searchCollectionsMenu();
         } else if (userInputMenu == 99) {
             librariansMenu();
@@ -197,6 +200,72 @@ public class librarian {
     }
 
     private static void addOtherItems() {
+
+    }
+
+    private static void updateCollectionsMenu() {
+        main.clearScreen();
+        System.out.print(
+            "-- UPDATE LIBRARY COLLECTIONS --\n" +
+            "   1. BOOKS\n" + 
+            "   2. RESEARCH JOURNALS\n" +
+            "   3. HERITAGE ITEMS\n" +
+            "   4. NEWSPAPERS\n" +
+            "   5. MAGAZINES\n" +
+            "   6. ARTWORKS\n" +
+            "   7. OTHER ITEMS\n" +
+            "   99. BACK\n" +
+            "INPUT MENU -> "
+        );
+        userInputMenu = scan1.nextInt();
+        scan1.nextLine();
+
+        if (userInputMenu == 1) {
+            updateBooks();
+        } else if (userInputMenu == 2) {
+            updateResearchJournals();
+        } else if (userInputMenu == 3) {
+            updateHeritageItems();
+        } else if (userInputMenu == 4) {
+            updateNewspapers();
+        } else if (userInputMenu == 5) {
+            updateMagazines();
+        } else if (userInputMenu == 6) {
+            updateArtworks();
+        } else if (userInputMenu == 7) {
+            updateOtherItems();
+        } else if (userInputMenu == 99) {
+            manageLibraryCollectionsMenu();
+        } else {
+            main.displayInvalidInput();
+        }
+    }
+
+    private static void updateBooks() {
+
+    }
+
+    private static void updateResearchJournals() {
+
+    }
+
+    private static void updateHeritageItems() {
+
+    }
+
+    private static void updateNewspapers() {
+
+    }
+
+    private static void updateMagazines() {
+
+    }
+
+    private static void updateArtworks() {
+
+    }
+
+    private static void updateOtherItems() {
 
     }
 
