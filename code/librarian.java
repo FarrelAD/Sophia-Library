@@ -157,6 +157,15 @@ public class librarian {
 
         // Add new book data with MySQL
         data.addToDatabase(sqlQuery);
+
+        main.clearScreen();
+        main.loadingLine();
+        System.out.println(
+            "\n                -- SUCCESS! --                 \n" + 
+            "===============================================\n"
+        );
+        main.enterForContinue();
+        addCollectionsMenu();
     }
 
     private static void newBookCancelled() {
