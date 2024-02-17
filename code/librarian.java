@@ -242,7 +242,144 @@ public class librarian {
     }
 
     private static void updateBooks() {
+        main.clearScreen();
+        System.out.print(
+            "CHOOSE A BOOK\n" +
+            "===============================================\n" +
+            " - BOOK ID      : "
+        );
+        String bookId = scan1.nextLine();
 
+
+        String [] updateBook = new String[7];
+        System.out.println(
+            "===============================================\n" +
+            "MODIFY THE DESIRED SECTIONS AS NEEDED!"
+        );
+        System.out.print(" - TITLE            : ");
+        updateBook[1] = scan1.nextLine();
+        System.out.print(" - AUTHOR           : ");
+        updateBook[2] = scan1.nextLine();
+        System.out.print(" - PUBLISHER        : ");
+        updateBook[3] = scan1.nextLine();
+        System.out.print(" - PUBLICATION YEAR : ");
+        updateBook[4] = scan1.nextLine();
+        System.out.print(" - ISBN             : ");
+        updateBook[5] = scan1.nextLine();
+        System.out.print(" - SOURCE           : ");
+        updateBook[6] = scan1.nextLine();
+        System.out.print(" - BOOK ID          : ");
+        updateBook[0] = scan1.nextLine();
+        System.out.print(
+            "=====================================\n" +
+            "CONFIRMATION [1/0] -> "
+        );
+        userInputMenu = scan1.nextInt();
+        scan1.nextLine();
+
+        if (userInputMenu == 1) {
+            // Find book id
+            String newBookId;
+            if (updateBook[0] == "") {
+                newBookId = bookId;
+            } else {
+                newBookId = updateBook[0];
+            }
+            updateBookToDatabase(newBookId, updateBook);
+        } else if (userInputMenu == 0) {
+            updateBookCancelled();
+        } else {
+            main.displayInvalidInput();
+        }
+    }
+
+    private static void updateBookToDatabase(String bookId, String[] updateBook) {
+        System.out.println("ID BUKUNYA: " + bookId);
+
+        String queryUpdateBook = "UPDATE sophia_books SET ";
+        ArrayList<String> newDataBook = new ArrayList<>();
+
+        if (updateBook[0] != "") {
+            newDataBook.add( "book_id = '" + updateBook[0] + "'");
+        }
+
+        if (updateBook[1] != "") {
+            newDataBook.add("title = '" + updateBook[1] + "'");
+        }
+
+        if (updateBook[2] != "") {
+            newDataBook.add("author = '" + updateBook[2] + "'");
+        }
+
+        if (updateBook[3] != "") {
+            newDataBook.add("publisher = '" + updateBook[3] + "'");
+        }
+
+        if (updateBook[4] != "") {
+            newDataBook.add("publication_year = " + updateBook[4]);
+        }
+
+        if (updateBook[5] != "") {
+            newDataBook.add("isbn = " + updateBook[5]);
+        }
+
+        if (updateBook[6] != "") {
+            newDataBook.add("source = '" + updateBook[6] + "'");
+        }
+
+        // Concatenate the new changes data of query
+        for (int i = 0; i < newDataBook.size(); i++) {
+            if (newDataBook.get(i) != null) {
+                if (i == newDataBook.size() - 1) {
+                    queryUpdateBook += " " + newDataBook.get(i);
+                } else {
+                    String firsString, secondString;
+                    if (i >= 0 && i < newDataBook.size()) {
+                        firsString = newDataBook.get(i);
+                        secondString = newDataBook.get(i+1);
+                    } else {
+                        firsString = newDataBook.get(i);
+                        secondString = null;
+                    }
+
+                    if (firsString != null && secondString != null) {
+                        queryUpdateBook += " " + newDataBook.get(i) + ", ";
+                    } else {
+                        queryUpdateBook += " " + newDataBook.get(i);
+                    }
+                }
+            }
+        }
+
+        // Add query filter
+        queryUpdateBook += " WHERE book_id = '" + bookId + "'";
+
+        // For monitoring
+        // System.out.println("Query: " + queryUpdateBook);
+        // main.enterForContinue();
+
+        main.clearScreen();
+        main.loadingLine();
+        
+        String resultQuery = data.updateDatabase(queryUpdateBook, bookId);
+        if (resultQuery == "[!] THE DATA CANNOT FIND [!]") {
+            System.out.println("\n         " + resultQuery);
+            System.out.println("===============================================\n");
+        } else {
+            System.out.println(
+                "\n                -- SUCCESS! --                 \n" +
+                "===============================================\n"
+            );
+            System.out.println(resultQuery);
+        }
+        main.enterForContinue();
+        updateCollectionsMenu();
+    }
+
+    private static void updateBookCancelled() {
+        System.out.println("UPDATING BOOK IS CANCELLED");
+        main.enterForContinue();
+        main.generalMenu();
     }
 
     private static void updateResearchJournals() {

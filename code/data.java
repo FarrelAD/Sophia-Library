@@ -51,4 +51,39 @@ public class data {
             e.printStackTrace();
         }
     }
+
+    // Method to update the data from database
+    public static String updateDatabase(String sqlQuery, String bookId) {
+        try (Statement stmt = conn.createStatement()) {
+            stmt.executeUpdate(sqlQuery);
+
+            // Query to show updated data
+            String queryShowUpdatedData = "SELECT * FROM sophia_books WHERE book_id = '" + bookId + "'";
+            ResultSet rs = stmt.executeQuery(queryShowUpdatedData);
+
+            StringBuilder result = new StringBuilder();
+            if (rs.next()) {
+                result.append(rs.getString(1))
+                .append(" | ")
+                .append(rs.getString(2))
+                .append(" | ")
+                .append(rs.getString(3))
+                .append(" | ")
+                .append(rs.getString(4))
+                .append(" | ")
+                .append(rs.getInt(5))
+                .append(" | ")
+                .append(rs.getLong(6))
+                .append(" | ")
+                .append(rs.getString(7))
+                .append("\n");
+            } else {
+                return "[!] THE DATA CANNOT FIND [!]";
+            }
+            return result.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
 }
